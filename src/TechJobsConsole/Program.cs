@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 
 namespace TechJobsConsole
 {
@@ -9,6 +10,8 @@ namespace TechJobsConsole
         {
             // Create two Dictionary vars to hold info for menu and data
 
+          //List<Dictionary<string,string>> output= PrintJobs(ListDictionaries);
+          
             // Top-level menu options
             Dictionary<string, string> actionChoices = new Dictionary<string, string>();
             actionChoices.Add("search", "Search");
@@ -23,6 +26,10 @@ namespace TechJobsConsole
             columnChoices.Add("all", "All");
 
             Console.WriteLine("Welcome to LaunchCode's TechJobs App!");
+
+            
+                
+                
 
             // Allow user to search/list until they manually quit with ctrl+c
             while (true)
@@ -63,7 +70,10 @@ namespace TechJobsConsole
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+
+                        //call PrintJobs method 
+                        searchResults = JobData.FindByValue(columnChoice);
+                        PrintJobs(searchResults);
                     }
                     else
                     {
@@ -71,7 +81,7 @@ namespace TechJobsConsole
                         PrintJobs(searchResults);
                     }
                 }
-            }
+            } 
         }
 
         /*
@@ -102,6 +112,9 @@ namespace TechJobsConsole
                 string input = Console.ReadLine();
                 choiceIdx = int.Parse(input);
 
+                //add validation 
+
+
                 if (choiceIdx < 0 || choiceIdx >= choiceKeys.Length)
                 {
                     Console.WriteLine("Invalid choices. Try again.");
@@ -118,7 +131,25 @@ namespace TechJobsConsole
 
         private static void PrintJobs(List<Dictionary<string, string>> someJobs)
         {
-            Console.WriteLine("PrintJobs is not implemented yet");
+
+            string seperator = "*******";
+            //create loop to loop through the entire list of jobs 
+            foreach (var i in someJobs)
+            {
+                Console.WriteLine(seperator);
+                foreach (KeyValuePair<string, string> j in i)
+                {
+                    
+                  //  Console.WriteLine(j.Key + "[K] " + " [V]" + j.Value);
+                    Console.WriteLine(j.Key + ":" + j.Value );
+                }
+
+
+            }
+            if (someJobs.Count == 0)
+                 {
+                Console.WriteLine("No Results Found!");
+                 }
         }
     }
 }

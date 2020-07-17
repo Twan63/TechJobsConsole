@@ -34,6 +34,7 @@ namespace TechJobsConsole
                 {
                     values.Add(aValue);
                 }
+   
             }
             return values;
         }
@@ -49,7 +50,7 @@ namespace TechJobsConsole
             {
                 string aValue = row[column];
 
-                if (aValue.Contains(value))
+                if (aValue.ToLower().Contains(value.ToLower()))
                 {
                     jobs.Add(row);
                 }
@@ -58,6 +59,29 @@ namespace TechJobsConsole
             return jobs;
         }
 
+        public static List<Dictionary<string, string>> FindByValue(string value)
+        {
+            //load data 
+            LoadData();
+
+            List<Dictionary<string, string>> jobSearch = new List<Dictionary<string, string>>();
+
+            foreach (Dictionary<string, string> i in AllJobs)
+            {
+                foreach(string keySearch in i.Keys)
+                { 
+                    
+                    string aValue = i[keySearch];
+
+                    if (aValue.ToLower().Contains(value.ToLower()))
+                    {
+                        jobSearch.Add(i);
+                        break;
+                    }
+                }
+            }
+            return jobSearch;
+        }
         /*
          * Load and parse data from job_data.csv
          */
